@@ -7,6 +7,8 @@ import itemReducer from '../reducers/itemReducer'
 import excludeReducer from '../reducers/excludeReducer'
 import allergyReducer from '../reducers/allergyReducer'
 import customizeReducer from '../reducers/customizeReducer'
+import cartReducer from '../reducers/cartReducer'
+import checkoutReducer from '../reducers/checkoutReducer'
 const configureStore = () => {
     const store = createStore(combineReducers({
         user:userReducer,
@@ -15,7 +17,9 @@ const configureStore = () => {
         item:itemReducer,
         exclude:excludeReducer,
         allergy:allergyReducer,
-        customize:customizeReducer
+        customize:customizeReducer,
+        cart:cartReducer,
+        checkout:checkoutReducer
     }),applyMiddleware(thunk))
 
     return store
