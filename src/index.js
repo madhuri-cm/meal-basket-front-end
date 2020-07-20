@@ -1,17 +1,52 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import 'bootstrap-css-only/css/bootstrap.min.css'
+import 'mdbreact/dist/css/mdb.css';
+import './assets/css/style.css'
 
-ReactDOM.render(
-  <React.StrictMode>
+import { Provider } from 'react-redux'
+import configureStore from './store/createStore'
+import { startGetPlans } from './actions/plansAction'
+import { startGetUser } from './actions/userAction'
+import { startGetCategory } from './actions/categoryAction'
+import { startGetItem } from './actions/itemAction'
+import {startGetExclude } from './actions/excludeAction'
+import {startGetAllergy} from './actions/allergyAction'
+import {startGetCustomize} from './actions/customizeAction'
+
+
+const store = configureStore()
+console.log(store.getState())
+store.subscribe(() => {
+  console.log(store.getState())
+})
+
+
+
+//handle page reload
+if(localStorage.getItem('authToken')) {
+  store.dispatch(startGetUser())
+  store.dispatch(startGetPlans())
+  store.dispatch(startGetCategory())
+  store.dispatch(startGetItem())
+  store.dispatch(startGetExclude())
+  store.dispatch(startGetAllergy())
+  store.dispatch(startGetCustomize())
+
+}
+const jsx = (
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Provider>
+  )
+  
+
+ReactDOM.render(jsx,document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+
